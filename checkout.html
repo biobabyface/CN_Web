@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>購物車 / 結帳 | 樂韻音樂教室</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="brand"><span class="brand-icon">♪</span><span>樂韻音樂教室</span></a>
+    <button class="menu-toggle" aria-label="選單">☰</button>
+    <ul class="nav-links">
+      <li><a href="index.html">首頁</a></li>
+      <li><a href="courses.html">課程介紹</a></li>
+      <li><a href="schedule.html">線上預約</a></li>
+      <li><a href="shop.html">樂器商城</a></li>
+      <li><a href="contact.html">聯絡我們</a></li>
+      <li><a href="checkout.html" class="cart-btn">購物車<span class="cart-count">0</span></a></li>
+    </ul>
+  </div>
+</nav>
+
+<section style="background: linear-gradient(135deg,#f7f8fa,#fff); padding: 80px 0 40px;">
+  <div class="container" style="text-align:center;">
+    <h1 class="section-title" style="font-size:2.4rem;">購物車 / 結帳</h1>
+    <div class="divider"></div>
+    <p class="section-sub">確認商品後選擇支付方式,支援 LINE Pay 與信用卡</p>
+  </div>
+</section>
+
+<section style="padding-top: 20px;">
+  <div class="container">
+    <div class="checkout-wrap">
+
+      <!-- 左:購物車 + 收件資料 -->
+      <div>
+        <div class="cart-list">
+          <h3 style="color: var(--primary); margin-bottom: 14px;">購物清單</h3>
+          <div id="cartItems"></div>
+        </div>
+
+        <div class="cart-list" style="margin-top: 20px;">
+          <h3 style="color: var(--primary); margin-bottom: 14px;">收件資料</h3>
+          <form id="orderForm" novalidate>
+            <div class="grid grid-2">
+              <div class="form-group">
+                <label>收件人 <span style="color: var(--danger);">*</span></label>
+                <input type="text" class="form-control" name="name" required>
+              </div>
+              <div class="form-group">
+                <label>電話 <span style="color: var(--danger);">*</span></label>
+                <input type="tel" class="form-control" name="phone" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>收件地址 <span style="color: var(--danger);">*</span></label>
+              <input type="text" class="form-control" name="address" required placeholder="例:台北市大安區忠孝東路四段 1 號">
+            </div>
+            <div class="form-group">
+              <label>備註</label>
+              <textarea class="form-control" name="note" placeholder="特殊需求(可留空)"></textarea>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- 右:訂單摘要 + 支付 -->
+      <div class="summary">
+        <h3>訂單摘要</h3>
+        <div class="summary-row"><span>商品小計</span><span id="subtotal">NT$ 0</span></div>
+        <div class="summary-row"><span>運費</span><span id="shipping">NT$ 0</span></div>
+        <div class="summary-row" id="discountRow" style="display:none;"><span>會員折扣 (-10%)</span><span id="discount">NT$ 0</span></div>
+        <div class="summary-total"><span>應付金額</span><span id="total">NT$ 0</span></div>
+
+        <p style="font-weight: 600; margin-top: 8px; margin-bottom: 8px; color: var(--text); font-size: .9rem;">選擇付款方式</p>
+        <div class="payment-methods">
+          <label class="pay-option selected">
+            <input type="radio" name="pay" value="linepay" checked>
+            <div class="pay-icon line">LINE</div>
+            <div>
+              <div style="font-weight: 600;">LINE Pay</div>
+              <div style="font-size: .8rem; color: var(--text-soft);">使用 LINE Pay 快速結帳</div>
+            </div>
+          </label>
+          <label class="pay-option">
+            <input type="radio" name="pay" value="card">
+            <div class="pay-icon card">CARD</div>
+            <div>
+              <div style="font-weight: 600;">信用卡 / 金融卡</div>
+              <div style="font-size: .8rem; color: var(--text-soft);">VISA · MasterCard · JCB</div>
+            </div>
+          </label>
+        </div>
+
+        <button id="payBtn" class="btn btn-line btn-block" style="margin-top: 14px;">
+          <span style="font-weight: 800; letter-spacing: 1px;">LINE Pay</span> 立即付款
+        </button>
+        <p style="font-size: .78rem; color: var(--text-soft); text-align:center; margin-top: 10px;">
+          🔒 採用 SSL 加密,個資保護無虞
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 信用卡輸入 Modal -->
+<div class="modal-bg" id="cardModal">
+  <div class="modal" style="text-align: left; max-width: 440px;">
+    <h2 style="text-align:center; margin-bottom: 6px;">信用卡付款</h2>
+    <p style="text-align:center; color: var(--text-soft); margin-bottom: 18px; font-size: .9rem;">請填寫信用卡資料完成付款</p>
+    <form id="cardForm" novalidate>
+      <div class="form-group">
+        <label>卡號</label>
+        <input type="text" class="form-control" name="cardno" placeholder="0000 0000 0000 0000" maxlength="19" required>
+      </div>
+      <div class="grid grid-2">
+        <div class="form-group">
+          <label>有效期限</label>
+          <input type="text" class="form-control" name="exp" placeholder="MM/YY" maxlength="5" required>
+        </div>
+        <div class="form-group">
+          <label>安全碼 CVC</label>
+          <input type="text" class="form-control" name="cvc" placeholder="123" maxlength="4" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>持卡人姓名</label>
+        <input type="text" class="form-control" name="cardname" required>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">確認付款 <span id="cardTotal"></span></button>
+      <button type="button" class="btn btn-outline btn-block" id="cancelCard" style="margin-top: 8px;">取消</button>
+    </form>
+  </div>
+</div>
+
+<!-- LINE Pay 模擬 Modal -->
+<div class="modal-bg" id="lineModal">
+  <div class="modal">
+    <div class="modal-icon" style="color: var(--line-green);">📱</div>
+    <h2>導向 LINE Pay</h2>
+    <p style="color: var(--text-soft); margin-bottom: 18px;">請開啟手機 LINE App 掃描下方 QR Code 完成付款</p>
+    <div style="background:#fff; border:2px solid var(--line-green); border-radius: 12px; padding: 16px; display: inline-block; margin-bottom: 18px;">
+      <div id="qrcode" style="width: 180px; height: 180px; background:
+        repeating-conic-gradient(#000 0% 25%, #fff 0% 50%) 0 / 18px 18px;
+        position: relative; overflow: hidden;">
+        <div style="position:absolute; inset: 30%; background:#fff; display:grid; place-items:center; font-weight:800; color: var(--line-green);">LINE<br>Pay</div>
+      </div>
+    </div>
+    <p style="font-size: .9rem; color: var(--text-soft); margin-bottom: 18px;">應付金額:<strong style="color: var(--primary);" id="lineTotal"></strong></p>
+    <button class="btn btn-line btn-block" id="lineSimulatePay">模擬完成付款 (測試用)</button>
+    <button class="btn btn-outline btn-block" id="cancelLine" style="margin-top: 8px;">取消</button>
+    <p style="font-size: .75rem; color: var(--text-soft); margin-top: 14px;">
+      ※ 正式環境需串接 LINE Pay Online API,此處為前端示範流程
+    </p>
+  </div>
+</div>
+
+<!-- 付款成功 Modal -->
+<div class="modal-bg" id="successModal">
+  <div class="modal">
+    <div class="modal-icon">✅</div>
+    <h2>付款成功!</h2>
+    <p style="color: var(--text-soft); margin-bottom: 18px;">感謝您的訂購!訂單編號:<strong id="orderNo">--</strong></p>
+    <p style="color: var(--text-soft); font-size: .9rem; margin-bottom: 18px;">我們將盡快出貨,並以 Email/簡訊通知您。</p>
+    <a href="index.html" class="btn btn-primary">回首頁</a>
+    <a href="shop.html" class="btn btn-outline" style="margin-left: 8px;">繼續購物</a>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="brand" style="color:#fff; margin-bottom:12px;">
+          <span class="brand-icon" style="background: var(--accent);">♪</span>
+          <span>樂韻音樂教室</span>
+        </div>
+        <p style="font-size:.9rem;">用音樂豐富生活的每一刻。</p>
+      </div>
+      <div><h4>課程</h4><ul><li><a href="courses.html">鋼琴</a></li><li><a href="courses.html">小提琴</a></li><li><a href="courses.html">吉他</a></li><li><a href="courses.html">聲樂</a></li></ul></div>
+      <div><h4>服務</h4><ul><li><a href="schedule.html">線上預約</a></li><li><a href="shop.html">樂器選購</a></li><li><a href="contact.html">聯絡我們</a></li></ul></div>
+      <div><h4>聯絡資訊</h4><ul><li>📞 02-1234-5678</li><li>📧 hello@music-studio.tw</li><li>📍 台北市大安區</li></ul></div>
+    </div>
+    <div class="copyright">© 2026 樂韻音樂教室 Music Studio. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+<script>
+const cartItems = document.getElementById('cartItems');
+const subtotalEl = document.getElementById('subtotal');
+const shippingEl = document.getElementById('shipping');
+const totalEl = document.getElementById('total');
+const payBtn = document.getElementById('payBtn');
+
+function fmt(n) { return 'NT$ ' + n.toLocaleString(); }
+
+function renderCart() {
+  const items = window.MT.getCart();
+  cartItems.innerHTML = '';
+  if (items.length === 0) {
+    cartItems.innerHTML = `
+      <div class="cart-empty">
+        <div style="font-size: 3rem; margin-bottom: 8px;">🛒</div>
+        <p>購物車目前沒有商品</p>
+        <a href="shop.html" class="btn btn-primary" style="margin-top: 12px;">前往選購</a>
+      </div>`;
+    updateSummary();
+    return;
+  }
+  items.forEach(it => {
+    const row = document.createElement('div');
+    row.className = 'cart-item';
+    row.innerHTML = `
+      <div class="cart-item-img">${it.icon || '🎵'}</div>
+      <div>
+        <div style="font-weight: 600;">${it.name}</div>
+        <div style="color: var(--text-soft); font-size: .85rem;">單價 ${fmt(it.price)}</div>
+      </div>
+      <div class="qty-control">
+        <button data-act="dec" data-id="${it.id}">−</button>
+        <span>${it.qty}</span>
+        <button data-act="inc" data-id="${it.id}">+</button>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-weight: 700; color: var(--accent);">${fmt(it.price * it.qty)}</div>
+        <button data-act="del" data-id="${it.id}" style="background:none; border:0; color: var(--danger); cursor:pointer; font-size: .85rem; margin-top: 4px;">移除</button>
+      </div>`;
+    cartItems.appendChild(row);
+  });
+  updateSummary();
+}
+
+cartItems.addEventListener('click', e => {
+  const btn = e.target.closest('button[data-act]');
+  if (!btn) return;
+  const id = btn.dataset.id;
+  if (btn.dataset.act === 'inc') window.MT.updateQty(id, 1);
+  else if (btn.dataset.act === 'dec') window.MT.updateQty(id, -1);
+  else if (btn.dataset.act === 'del') window.MT.removeFromCart(id);
+});
+
+function updateSummary() {
+  const items = window.MT.getCart();
+  const sub = items.reduce((s, i) => s + i.price * i.qty, 0);
+  const ship = sub === 0 ? 0 : (sub >= 2000 ? 0 : 120);
+  const total = sub + ship;
+  subtotalEl.textContent = fmt(sub);
+  shippingEl.textContent = ship === 0 && sub > 0 ? '免運' : fmt(ship);
+  totalEl.textContent = fmt(total);
+  document.getElementById('cardTotal').textContent = total > 0 ? `(${fmt(total)})` : '';
+  document.getElementById('lineTotal').textContent = fmt(total);
+  payBtn.disabled = items.length === 0;
+  payBtn.style.opacity = items.length === 0 ? .5 : 1;
+}
+
+document.addEventListener('cart:change', renderCart);
+renderCart();
+
+/* 切換支付方式 UI */
+document.querySelectorAll('input[name="pay"]').forEach(r => {
+  r.addEventListener('change', () => {
+    document.querySelectorAll('.pay-option').forEach(o => o.classList.remove('selected'));
+    r.closest('.pay-option').classList.add('selected');
+    if (r.value === 'linepay') {
+      payBtn.className = 'btn btn-line btn-block';
+      payBtn.innerHTML = `<span style="font-weight: 800; letter-spacing: 1px;">LINE Pay</span> 立即付款`;
+    } else {
+      payBtn.className = 'btn btn-primary btn-block';
+      payBtn.innerHTML = `💳 信用卡付款`;
+    }
+  });
+});
+
+/* 付款流程 */
+payBtn.addEventListener('click', () => {
+  const items = window.MT.getCart();
+  if (items.length === 0) { window.MT.showToast('購物車是空的', 'danger'); return; }
+  const form = document.getElementById('orderForm');
+  const fd = new FormData(form);
+  if (!fd.get('name')?.toString().trim() || !fd.get('phone')?.toString().trim() || !fd.get('address')?.toString().trim()) {
+    window.MT.showToast('請完整填寫收件資料', 'danger');
+    form.scrollIntoView({ behavior: 'smooth' });
+    return;
+  }
+  const method = document.querySelector('input[name="pay"]:checked').value;
+  if (method === 'linepay') {
+    document.getElementById('lineModal').classList.add('show');
+  } else {
+    document.getElementById('cardModal').classList.add('show');
+  }
+});
+
+/* LINE Pay 模擬完成 */
+document.getElementById('lineSimulatePay').addEventListener('click', () => {
+  document.getElementById('lineModal').classList.remove('show');
+  completePayment();
+});
+document.getElementById('cancelLine').addEventListener('click', () => {
+  document.getElementById('lineModal').classList.remove('show');
+});
+
+/* 信用卡表單 */
+document.getElementById('cardForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const cardno = e.target.cardno.value.replace(/\s/g, '');
+  if (cardno.length < 13 || cardno.length > 19) { window.MT.showToast('卡號格式錯誤', 'danger'); return; }
+  if (!/^\d{2}\/\d{2}$/.test(e.target.exp.value)) { window.MT.showToast('期限格式 MM/YY', 'danger'); return; }
+  if (!/^\d{3,4}$/.test(e.target.cvc.value)) { window.MT.showToast('安全碼格式錯誤', 'danger'); return; }
+  document.getElementById('cardModal').classList.remove('show');
+  e.target.reset();
+  completePayment();
+});
+document.getElementById('cancelCard').addEventListener('click', () => {
+  document.getElementById('cardModal').classList.remove('show');
+});
+
+/* 卡號自動加空格 */
+document.querySelector('input[name="cardno"]').addEventListener('input', e => {
+  let v = e.target.value.replace(/\D/g, '').slice(0, 16);
+  e.target.value = v.replace(/(\d{4})(?=\d)/g, '$1 ');
+});
+document.querySelector('input[name="exp"]').addEventListener('input', e => {
+  let v = e.target.value.replace(/\D/g, '').slice(0, 4);
+  if (v.length >= 3) v = v.slice(0, 2) + '/' + v.slice(2);
+  e.target.value = v;
+});
+
+function completePayment() {
+  const orderNo = 'MT' + Date.now().toString().slice(-8);
+  document.getElementById('orderNo').textContent = orderNo;
+  window.MT.clearCart();
+  document.getElementById('successModal').classList.add('show');
+}
+</script>
+</body>
+</html>

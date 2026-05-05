@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>線上預約 | 樂韻音樂教室</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="brand"><span class="brand-icon">♪</span><span>樂韻音樂教室</span></a>
+    <button class="menu-toggle" aria-label="選單">☰</button>
+    <ul class="nav-links">
+      <li><a href="index.html">首頁</a></li>
+      <li><a href="courses.html">課程介紹</a></li>
+      <li><a href="schedule.html">線上預約</a></li>
+      <li><a href="shop.html">樂器商城</a></li>
+      <li><a href="contact.html">聯絡我們</a></li>
+      <li><a href="checkout.html" class="cart-btn">購物車<span class="cart-count">0</span></a></li>
+    </ul>
+  </div>
+</nav>
+
+<section style="background: linear-gradient(135deg,#f7f8fa,#fff); padding: 80px 0 40px;">
+  <div class="container" style="text-align:center;">
+    <h1 class="section-title" style="font-size:2.4rem;">線上預約 / 招生排程</h1>
+    <div class="divider"></div>
+    <p class="section-sub">三步驟完成預約:選擇課程 → 選日期時段 → 填寫資料</p>
+  </div>
+</section>
+
+<section style="padding-top: 20px;">
+  <div class="container">
+
+    <!-- Step 1: 選擇課程 -->
+    <div style="background:#fff; border:1px solid var(--border); border-radius: var(--radius); padding: 24px; margin-bottom: 24px;">
+      <h3 style="color: var(--primary); margin-bottom: 16px;">① 選擇課程</h3>
+      <div class="grid grid-4">
+        <label class="pay-option" style="flex-direction: column; text-align:center; padding: 16px;">
+          <input type="radio" name="course" value="鋼琴" data-price="1200" checked>
+          <div style="font-size: 2.4rem;">🎹</div>
+          <div style="font-weight: 600;">鋼琴</div>
+          <div style="font-size: .85rem; color: var(--text-soft);">NT$ 1,200</div>
+        </label>
+        <label class="pay-option" style="flex-direction: column; text-align:center; padding: 16px;">
+          <input type="radio" name="course" value="小提琴" data-price="1300">
+          <div style="font-size: 2.4rem;">🎻</div>
+          <div style="font-weight: 600;">小提琴</div>
+          <div style="font-size: .85rem; color: var(--text-soft);">NT$ 1,300</div>
+        </label>
+        <label class="pay-option" style="flex-direction: column; text-align:center; padding: 16px;">
+          <input type="radio" name="course" value="吉他/烏克麗麗" data-price="1000">
+          <div style="font-size: 2.4rem;">🎸</div>
+          <div style="font-weight: 600;">吉他/烏克麗麗</div>
+          <div style="font-size: .85rem; color: var(--text-soft);">NT$ 1,000</div>
+        </label>
+        <label class="pay-option" style="flex-direction: column; text-align:center; padding: 16px;">
+          <input type="radio" name="course" value="聲樂" data-price="1100">
+          <div style="font-size: 2.4rem;">🎤</div>
+          <div style="font-weight: 600;">聲樂/其他</div>
+          <div style="font-size: .85rem; color: var(--text-soft);">NT$ 1,100</div>
+        </label>
+      </div>
+    </div>
+
+    <!-- Step 2: 日曆 + 時段 -->
+    <h3 style="color: var(--primary); margin-bottom: 16px;">② 選擇日期與時段</h3>
+    <div class="schedule-wrap">
+      <div class="calendar">
+        <div class="cal-header">
+          <h3 id="calMonth">2026 年 5 月</h3>
+          <div class="cal-nav">
+            <button id="prevMonth">←</button>
+            <button id="nextMonth">→</button>
+          </div>
+        </div>
+        <div class="cal-grid" id="calGrid">
+          <!-- 由 JS 動態填入 -->
+        </div>
+      </div>
+      <div class="time-slots">
+        <h3>可預約時段 <small id="selDate" style="color: var(--text-soft); font-size: .85rem; font-weight: 400;">請先選擇日期</small></h3>
+        <div class="slot-grid" id="slotGrid">
+          <div class="slot taken">10:00</div>
+          <div class="slot">11:00</div>
+          <div class="slot">14:00</div>
+          <div class="slot taken">15:00</div>
+          <div class="slot">16:00</div>
+          <div class="slot">17:00</div>
+          <div class="slot">18:00</div>
+          <div class="slot">19:00</div>
+          <div class="slot">20:00</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3: 學員資料 -->
+    <div style="background:#fff; border:1px solid var(--border); border-radius: var(--radius); padding: 24px; margin-top: 24px;">
+      <h3 style="color: var(--primary); margin-bottom: 16px;">③ 填寫資料</h3>
+      <form id="bookingForm" novalidate>
+        <div class="grid grid-2">
+          <div class="form-group">
+            <label>姓名 <span style="color: var(--danger);">*</span></label>
+            <input type="text" class="form-control" name="name" required placeholder="請輸入姓名">
+          </div>
+          <div class="form-group">
+            <label>連絡電話 <span style="color: var(--danger);">*</span></label>
+            <input type="tel" class="form-control" name="phone" required placeholder="0912-345-678">
+          </div>
+        </div>
+        <div class="grid grid-2">
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" class="form-control" name="email" placeholder="example@email.com">
+          </div>
+          <div class="form-group">
+            <label>程度</label>
+            <select class="form-control" name="level">
+              <option>初學者(零基礎)</option>
+              <option>入門(已學過半年內)</option>
+              <option>中階(1~3 年經驗)</option>
+              <option>進階(3 年以上)</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>備註</label>
+          <textarea class="form-control" name="note" placeholder="想學的曲風、學習目標、特殊需求等..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">送出預約</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- 預約成功 Modal -->
+<div class="modal-bg" id="confirmModal">
+  <div class="modal">
+    <div class="modal-icon">🎉</div>
+    <h2>預約成功!</h2>
+    <p style="color: var(--text-soft); margin-bottom: 16px;">我們已收到您的預約申請,將於 24 小時內以電話/Email 與您確認。</p>
+    <div id="bookingDetail" style="background: var(--bg-soft); padding: 14px; border-radius: 8px; text-align: left; font-size: .9rem; margin-bottom: 18px;"></div>
+    <a href="index.html" class="btn btn-primary">回首頁</a>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="brand" style="color:#fff; margin-bottom:12px;">
+          <span class="brand-icon" style="background: var(--accent);">♪</span>
+          <span>樂韻音樂教室</span>
+        </div>
+        <p style="font-size:.9rem;">用音樂豐富生活的每一刻。</p>
+      </div>
+      <div><h4>課程</h4><ul><li><a href="courses.html">鋼琴</a></li><li><a href="courses.html">小提琴</a></li><li><a href="courses.html">吉他</a></li><li><a href="courses.html">聲樂</a></li></ul></div>
+      <div><h4>服務</h4><ul><li><a href="schedule.html">線上預約</a></li><li><a href="shop.html">樂器選購</a></li><li><a href="contact.html">聯絡我們</a></li></ul></div>
+      <div><h4>聯絡資訊</h4><ul><li>📞 02-1234-5678</li><li>📧 hello@music-studio.tw</li><li>📍 台北市大安區</li></ul></div>
+    </div>
+    <div class="copyright">© 2026 樂韻音樂教室 Music Studio. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+<script>
+/* ====== 日曆邏輯 ====== */
+const today = new Date();
+let viewYear = today.getFullYear();
+let viewMonth = today.getMonth(); // 0-11
+let selectedDate = null;
+let selectedTime = null;
+
+const calMonth = document.getElementById('calMonth');
+const calGrid = document.getElementById('calGrid');
+const selDate = document.getElementById('selDate');
+const slotGrid = document.getElementById('slotGrid');
+
+function renderCalendar() {
+  calMonth.textContent = `${viewYear} 年 ${viewMonth + 1} 月`;
+  calGrid.innerHTML = '';
+  ['日','一','二','三','四','五','六'].forEach(d => {
+    const div = document.createElement('div');
+    div.className = 'dow'; div.textContent = d;
+    calGrid.appendChild(div);
+  });
+  const firstDay = new Date(viewYear, viewMonth, 1).getDay();
+  const lastDate = new Date(viewYear, viewMonth + 1, 0).getDate();
+  for (let i = 0; i < firstDay; i++) {
+    const e = document.createElement('div');
+    e.className = 'cal-day empty';
+    calGrid.appendChild(e);
+  }
+  for (let d = 1; d <= lastDate; d++) {
+    const cell = document.createElement('div');
+    const cellDate = new Date(viewYear, viewMonth, d);
+    const isPast = cellDate < new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    cell.className = 'cal-day ' + (isPast ? 'disabled' : 'available');
+    cell.textContent = d;
+    if (!isPast) {
+      cell.addEventListener('click', () => {
+        document.querySelectorAll('.cal-day.selected').forEach(x => x.classList.remove('selected'));
+        cell.classList.add('selected');
+        selectedDate = `${viewYear}/${String(viewMonth+1).padStart(2,'0')}/${String(d).padStart(2,'0')}`;
+        selDate.textContent = `(${selectedDate})`;
+      });
+    }
+    calGrid.appendChild(cell);
+  }
+}
+document.getElementById('prevMonth').addEventListener('click', () => {
+  viewMonth--; if (viewMonth < 0) { viewMonth = 11; viewYear--; }
+  renderCalendar();
+});
+document.getElementById('nextMonth').addEventListener('click', () => {
+  viewMonth++; if (viewMonth > 11) { viewMonth = 0; viewYear++; }
+  renderCalendar();
+});
+renderCalendar();
+
+/* ====== 時段選擇 ====== */
+slotGrid.addEventListener('click', e => {
+  const slot = e.target.closest('.slot');
+  if (!slot || slot.classList.contains('taken')) return;
+  document.querySelectorAll('.slot.selected').forEach(s => s.classList.remove('selected'));
+  slot.classList.add('selected');
+  selectedTime = slot.textContent.trim();
+});
+
+/* ====== 表單提交 ====== */
+document.getElementById('bookingForm').addEventListener('submit', e => {
+  e.preventDefault();
+  if (!selectedDate) { window.MT.showToast('請選擇日期', 'danger'); return; }
+  if (!selectedTime) { window.MT.showToast('請選擇時段', 'danger'); return; }
+  const fd = new FormData(e.target);
+  const name = fd.get('name')?.toString().trim();
+  const phone = fd.get('phone')?.toString().trim();
+  if (!name || !phone) { window.MT.showToast('請填寫姓名與電話', 'danger'); return; }
+  const course = document.querySelector('input[name="course"]:checked').value;
+
+  document.getElementById('bookingDetail').innerHTML = `
+    <div><strong>課程:</strong>${course}</div>
+    <div><strong>日期:</strong>${selectedDate}</div>
+    <div><strong>時段:</strong>${selectedTime}</div>
+    <div><strong>學員:</strong>${name}(${phone})</div>
+  `;
+  document.getElementById('confirmModal').classList.add('show');
+  e.target.reset();
+});
+</script>
+</body>
+</html>

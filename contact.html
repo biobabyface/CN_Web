@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>聯絡我們 | 樂韻音樂教室</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="brand"><span class="brand-icon">♪</span><span>樂韻音樂教室</span></a>
+    <button class="menu-toggle" aria-label="選單">☰</button>
+    <ul class="nav-links">
+      <li><a href="index.html">首頁</a></li>
+      <li><a href="courses.html">課程介紹</a></li>
+      <li><a href="schedule.html">線上預約</a></li>
+      <li><a href="shop.html">樂器商城</a></li>
+      <li><a href="contact.html">聯絡我們</a></li>
+      <li><a href="checkout.html" class="cart-btn">購物車<span class="cart-count">0</span></a></li>
+    </ul>
+  </div>
+</nav>
+
+<section style="background: linear-gradient(135deg,#f7f8fa,#fff); padding: 80px 0 40px;">
+  <div class="container" style="text-align:center;">
+    <h1 class="section-title" style="font-size:2.4rem;">聯絡我們</h1>
+    <div class="divider"></div>
+    <p class="section-sub">有任何疑問都歡迎與我們聯繫,我們將於 24 小時內回覆</p>
+  </div>
+</section>
+
+<section style="padding-top: 20px;">
+  <div class="container">
+    <div class="grid grid-2">
+      <!-- 聯絡資訊 -->
+      <div>
+        <div class="card" style="margin-bottom: 16px;">
+          <div class="card-icon">📍</div>
+          <h3>教室地址</h3>
+          <p>台北市大安區忠孝東路四段 100 號 5 樓</p>
+        </div>
+        <div class="card" style="margin-bottom: 16px;">
+          <div class="card-icon">📞</div>
+          <h3>聯絡電話</h3>
+          <p>02-1234-5678 / 0912-345-678</p>
+        </div>
+        <div class="card" style="margin-bottom: 16px;">
+          <div class="card-icon">📧</div>
+          <h3>電子郵件</h3>
+          <p>hello@music-studio.tw</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">⏰</div>
+          <h3>營業時間</h3>
+          <p>週一至週五 13:00 – 21:00<br>週六、週日 09:00 – 18:00<br>(國定假日休)</p>
+        </div>
+      </div>
+
+      <!-- 表單 -->
+      <div style="background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 32px;">
+        <h3 style="color: var(--primary); margin-bottom: 16px;">傳送訊息</h3>
+        <form id="contactForm" novalidate>
+          <div class="grid grid-2">
+            <div class="form-group">
+              <label>姓名 <span style="color: var(--danger);">*</span></label>
+              <input type="text" class="form-control" name="name" required>
+            </div>
+            <div class="form-group">
+              <label>電話</label>
+              <input type="tel" class="form-control" name="phone">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Email <span style="color: var(--danger);">*</span></label>
+            <input type="email" class="form-control" name="email" required>
+          </div>
+          <div class="form-group">
+            <label>主旨</label>
+            <select class="form-control" name="topic">
+              <option>課程諮詢</option>
+              <option>樂器選購</option>
+              <option>合作邀約</option>
+              <option>其他</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>內容 <span style="color: var(--danger);">*</span></label>
+            <textarea class="form-control" name="msg" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">送出訊息</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 地圖區 (示意) -->
+<section style="padding-top: 20px;">
+  <div class="container">
+    <div style="background: linear-gradient(135deg, #e8eef5, #d4dde8); border-radius: var(--radius); aspect-ratio: 21/9; display: grid; place-items: center; color: var(--primary);">
+      <div style="text-align:center;">
+        <div style="font-size: 4rem;">🗺️</div>
+        <p style="font-weight: 600; margin-top: 8px;">教室位置地圖</p>
+        <p style="color: var(--text-soft); font-size: .9rem;">(可串接 Google Maps Embed)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 訊息成功 Modal -->
+<div class="modal-bg" id="contactModal">
+  <div class="modal">
+    <div class="modal-icon">📨</div>
+    <h2>訊息已送出</h2>
+    <p style="color: var(--text-soft); margin-bottom: 18px;">感謝您的來信,我們將盡快回覆。</p>
+    <button class="btn btn-primary" onclick="document.getElementById('contactModal').classList.remove('show')">確定</button>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="brand" style="color:#fff; margin-bottom:12px;">
+          <span class="brand-icon" style="background: var(--accent);">♪</span>
+          <span>樂韻音樂教室</span>
+        </div>
+        <p style="font-size:.9rem;">用音樂豐富生活的每一刻。</p>
+      </div>
+      <div><h4>課程</h4><ul><li><a href="courses.html">鋼琴</a></li><li><a href="courses.html">小提琴</a></li><li><a href="courses.html">吉他</a></li><li><a href="courses.html">聲樂</a></li></ul></div>
+      <div><h4>服務</h4><ul><li><a href="schedule.html">線上預約</a></li><li><a href="shop.html">樂器選購</a></li><li><a href="contact.html">聯絡我們</a></li></ul></div>
+      <div><h4>聯絡資訊</h4><ul><li>📞 02-1234-5678</li><li>📧 hello@music-studio.tw</li><li>📍 台北市大安區</li></ul></div>
+    </div>
+    <div class="copyright">© 2026 樂韻音樂教室 Music Studio. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+<script>
+document.getElementById('contactForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const fd = new FormData(e.target);
+  if (!fd.get('name')?.toString().trim() || !fd.get('email')?.toString().trim() || !fd.get('msg')?.toString().trim()) {
+    window.MT.showToast('請填寫必填欄位', 'danger');
+    return;
+  }
+  document.getElementById('contactModal').classList.add('show');
+  e.target.reset();
+});
+</script>
+</body>
+</html>

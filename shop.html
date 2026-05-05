@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>樂器商城 | 樂韻音樂教室</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="brand"><span class="brand-icon">♪</span><span>樂韻音樂教室</span></a>
+    <button class="menu-toggle" aria-label="選單">☰</button>
+    <ul class="nav-links">
+      <li><a href="index.html">首頁</a></li>
+      <li><a href="courses.html">課程介紹</a></li>
+      <li><a href="schedule.html">線上預約</a></li>
+      <li><a href="shop.html">樂器商城</a></li>
+      <li><a href="contact.html">聯絡我們</a></li>
+      <li><a href="checkout.html" class="cart-btn">購物車<span class="cart-count">0</span></a></li>
+    </ul>
+  </div>
+</nav>
+
+<section style="background: linear-gradient(135deg,#f7f8fa,#fff); padding: 80px 0 40px;">
+  <div class="container" style="text-align:center;">
+    <h1 class="section-title" style="font-size:2.4rem;">樂器商城</h1>
+    <div class="divider"></div>
+    <p class="section-sub">嚴選教學用樂器、配件與書籍。會員享 9 折優惠,滿 NT$ 2,000 免運。</p>
+  </div>
+</section>
+
+<!-- 分類篩選 -->
+<section style="padding-top: 20px; padding-bottom: 0;">
+  <div class="container">
+    <div style="display:flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-bottom: 40px;" id="filterBar">
+      <button class="btn btn-outline btn-sm filter-btn active" data-cat="all">全部</button>
+      <button class="btn btn-outline btn-sm filter-btn" data-cat="鋼琴">鋼琴</button>
+      <button class="btn btn-outline btn-sm filter-btn" data-cat="弦樂">弦樂</button>
+      <button class="btn btn-outline btn-sm filter-btn" data-cat="吉他">吉他/烏克麗麗</button>
+      <button class="btn btn-outline btn-sm filter-btn" data-cat="配件">配件</button>
+      <button class="btn btn-outline btn-sm filter-btn" data-cat="書籍">教材書籍</button>
+    </div>
+    <div class="grid grid-4" id="productGrid"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="brand" style="color:#fff; margin-bottom:12px;">
+          <span class="brand-icon" style="background: var(--accent);">♪</span>
+          <span>樂韻音樂教室</span>
+        </div>
+        <p style="font-size:.9rem;">用音樂豐富生活的每一刻。</p>
+      </div>
+      <div><h4>課程</h4><ul><li><a href="courses.html">鋼琴</a></li><li><a href="courses.html">小提琴</a></li><li><a href="courses.html">吉他</a></li><li><a href="courses.html">聲樂</a></li></ul></div>
+      <div><h4>服務</h4><ul><li><a href="schedule.html">線上預約</a></li><li><a href="shop.html">樂器選購</a></li><li><a href="contact.html">聯絡我們</a></li></ul></div>
+      <div><h4>聯絡資訊</h4><ul><li>📞 02-1234-5678</li><li>📧 hello@music-studio.tw</li><li>📍 台北市大安區</li></ul></div>
+    </div>
+    <div class="copyright">© 2026 樂韻音樂教室 Music Studio. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+<script>
+const PRODUCTS = [
+  { id: 'p001', name: 'Yamaha P-125 數位鋼琴', cat: '鋼琴',  price: 25800, icon: '🎹' },
+  { id: 'p002', name: 'Casio CT-S300 電子琴',   cat: '鋼琴',  price: 6800,  icon: '🎹' },
+  { id: 'p003', name: '4/4 練習用小提琴(含弓)',cat: '弦樂',  price: 8900,  icon: '🎻' },
+  { id: 'p004', name: '大提琴入門組',            cat: '弦樂',  price: 18500, icon: '🎻' },
+  { id: 'p005', name: 'Yamaha 民謠木吉他 FG800', cat: '吉他',  price: 7200,  icon: '🎸' },
+  { id: 'p006', name: 'Kala 21 吋烏克麗麗',     cat: '吉他',  price: 2400,  icon: '🪕' },
+  { id: 'p007', name: 'Fender 電吉他套組',       cat: '吉他',  price: 12800, icon: '🎸' },
+  { id: 'p008', name: '節拍器(數位)',          cat: '配件',  price: 690,   icon: '⏱️' },
+  { id: 'p009', name: '電子調音器',              cat: '配件',  price: 450,   icon: '🎚️' },
+  { id: 'p010', name: '鋼琴琴椅(可調式)',      cat: '配件',  price: 1980,  icon: '🪑' },
+  { id: 'p011', name: '拜爾鋼琴教本(全新版)',  cat: '書籍',  price: 280,   icon: '📘' },
+  { id: 'p012', name: '流行鋼琴金曲集 vol.5',    cat: '書籍',  price: 380,   icon: '📗' },
+];
+
+const grid = document.getElementById('productGrid');
+
+function render(cat) {
+  grid.innerHTML = '';
+  const list = cat === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.cat === cat);
+  list.forEach(p => {
+    const el = document.createElement('div');
+    el.className = 'product-card';
+    el.innerHTML = `
+      <div class="product-img">${p.icon}</div>
+      <div class="product-body">
+        <div class="product-cat">${p.cat}</div>
+        <h4>${p.name}</h4>
+        <div class="product-price">NT$ ${p.price.toLocaleString()}</div>
+        <button class="btn btn-primary btn-sm btn-block" data-id="${p.id}">加入購物車</button>
+      </div>`;
+    el.querySelector('button').addEventListener('click', () => {
+      window.MT.addToCart({ id: p.id, name: p.name, price: p.price, icon: p.icon });
+    });
+    grid.appendChild(el);
+  });
+  if (list.length === 0) {
+    grid.innerHTML = `<div style="grid-column: 1/-1; text-align:center; color: var(--text-soft); padding: 40px;">此分類暫無商品</div>`;
+  }
+}
+render('all');
+
+document.getElementById('filterBar').addEventListener('click', e => {
+  const btn = e.target.closest('.filter-btn');
+  if (!btn) return;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  render(btn.dataset.cat);
+});
+</script>
+<style>
+  .filter-btn.active { background: var(--primary); color: #fff; }
+</style>
+</body>
+</html>
